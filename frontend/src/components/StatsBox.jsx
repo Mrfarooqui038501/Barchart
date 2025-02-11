@@ -1,32 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import api from '../services/api';
+import React from 'react';
 
-const StatsBox = ({ month }) => {
-  const [stats, setStats] = useState({
-    totalSaleAmount: 0,
-    soldItemsCount: 0,
-    notSoldItemsCount: 0,
-  });
-
-  useEffect(() => {
-    fetchStatistics();
-  }, [month]);
-
-  const fetchStatistics = async () => {
-    try {
-      const response = await api.get('/statistics', { params: { month } });
-      setStats(response.data || {});
-    } catch (error) {
-      console.error('Error fetching statistics', error);
-    }
-  };
-
+const StatsBox = ({ stats }) => {
   return (
-    <div>
-      <h3>Statistics</h3>
-      <p>Total Sale Amount: {stats.totalSaleAmount}</p>
-      <p>Total Sold Items: {stats.soldItemsCount}</p>
-      <p>Total Not Sold Items: {stats.notSoldItemsCount}</p>
+    <div className="grid grid-cols-3 gap-6">
+      <div className="bg-green-100 p-4 rounded-lg shadow-md text-center">
+        <h4 className="text-lg font-semibold text-green-800">Total Sale Amount</h4>
+        <p className="text-xl font-bold text-green-600">${stats.totalSaleAmount}</p>
+      </div>
+      <div className="bg-blue-100 p-4 rounded-lg shadow-md text-center">
+        <h4 className="text-lg font-semibold text-blue-800">Total Sold Items</h4>
+        <p className="text-xl font-bold text-blue-600">{stats.soldItemsCount}</p>
+      </div>
+      <div className="bg-red-100 p-4 rounded-lg shadow-md text-center">
+        <h4 className="text-lg font-semibold text-red-800">Total Not Sold Items</h4>
+        <p className="text-xl font-bold text-red-600">{stats.notSoldItemsCount}</p>
+      </div>
     </div>
   );
 };

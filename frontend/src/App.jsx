@@ -1,6 +1,6 @@
 import React from 'react';
 import Dashboard from './pages/Dashboard';
-import './App.css';  
+// import './App.css';  
 
 const App = () => {
   return (

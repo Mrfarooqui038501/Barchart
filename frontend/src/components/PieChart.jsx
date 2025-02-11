@@ -1,45 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Pie } from 'react-chartjs-2';
-import api from '../services/api';
 
-const PieChart = ({ month }) => {
-  const [chartData, setChartData] = useState({
-    labels: [],
+const PieChart = ({ stats }) => {
+  const chartData = {
+    labels: ['Sold Items', 'Not Sold Items'],
     datasets: [
       {
-        data: [],
-        backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#66ff66', '#ff6666'],
+        data: [stats.soldItemsCount, stats.notSoldItemsCount],
+        backgroundColor: ['#FFCE56', '#FF6384'],
+        borderWidth: 1,
+        borderColor: '#ffffff',
       },
     ],
-  });
-
-  useEffect(() => {
-    fetchPieChartData();
-  }, [month]);
-
-  const fetchPieChartData = async () => {
-    try {
-      const response = await api.get('/piechart', { params: { month } });
-      const labels = response.data?.map((item) => item._id) || [];
-      const data = response.data?.map((item) => item.count) || [];
-
-      setChartData({
-        labels,
-        datasets: [
-          {
-            data,
-            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#66ff66', '#ff6666'],
-          },
-        ],
-      });
-    } catch (error) {
-      console.error('Error fetching pie chart data', error);
-    }
   };
 
   return (
-    <div style={{ width: '600px', height: '400px' }}>
-      <Pie data={chartData} options={{ maintainAspectRatio: false }} />
+    <div className="p-6 bg-white rounded-lg shadow-lg">
+      <h2 className="text-xl font-bold mb-4 text-gray-800">Transaction Categories</h2>
+      <div className="bg-gray-50 p-4 rounded-lg" style={{ height: '400px' }}>
+        <Pie data={chartData} options={{ responsive: true, maintainAspectRatio: false }} />
+      </div>
     </div>
   );
 };
