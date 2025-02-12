@@ -36,7 +36,7 @@ const TransactionsTable = ({ month, year, onStatsUpdate, onDateChange }) => {
       setTransactions(transactionsData);
       setTotalPages(response.data.totalPages || 1);
       
-      // Calculate and update stats
+      
       const newStats = calculateStats(transactionsData);
       onStatsUpdate(newStats);
     } catch (error) {
